@@ -13,7 +13,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
-def check_list_len(user_id):
+def trigger_message(user_id):
     logging.info(f'Sending reminder to user {user_id}')
     request = requests.get(f'http://127.0.0.1:8080/api/trigger_reminder/{user_id}')
 
@@ -40,7 +40,7 @@ async def list_pop(user_id: int, time:str):
     except:
         pass
     finally:
-        scheduler.add_job(func=check_list_len, trigger='interval', args=[user_id], hours=hours, minutes=minutes, id=str(user_id))
+        scheduler.add_job(func=trigger_message, trigger='interval', args=[user_id], hours=hours, minutes=minutes, id=str(user_id))
 
     return 200
 
